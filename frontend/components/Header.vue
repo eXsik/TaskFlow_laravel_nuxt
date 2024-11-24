@@ -9,7 +9,7 @@
           <template v-if="isLoggedIn">
             <li v-if="user">Hello user {{ user.name }}</li>
             <li>
-              <NuxtLink to="">Logout</NuxtLink>
+              <button @click.prevent="handleLogout">Logout</button>
             </li>
           </template>
           <template v-else>
@@ -32,7 +32,9 @@ interface User {
   email: string;
 }
 
-const { isLoggedIn, user } = useSanctum<User>();
-console.log("test", isLoggedIn);
-console.log("test 2", user);
+const { isLoggedIn, user, logout } = useSanctum<User>();
+
+const handleLogout = () => {
+  logout();
+};
 </script>

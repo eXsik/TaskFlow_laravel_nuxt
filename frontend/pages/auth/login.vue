@@ -84,6 +84,10 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: ["$guest"],
+});
+
 const { login } = useSanctum();
 const form = ref({
   email: "",

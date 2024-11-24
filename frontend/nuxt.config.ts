@@ -9,5 +9,18 @@ export default defineNuxtConfig({
   laravelSanctum: {
     apiUrl: "http://laravel.test",
     authMode: "cookie",
+    redirect: {
+      enableIntendedRedirect: false,
+      loginPath: "/auth/login",
+      redirectToAfterLogin: "/dashboard",
+      redirectToAfterLogout: "/",
+      guestOnlyRedirect: "/dashboard",
+    },
+    sanctumEndpoints: {
+      csrf: "/sanctum/csrf-cookie",
+      login: "/api/login",
+      logout: "/api/logout",
+      user: "/api/user",
+    },
   },
 });
