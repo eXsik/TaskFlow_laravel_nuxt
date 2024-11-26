@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BoardResource;
 use App\Models\Board;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
 class BoardController extends Controller
@@ -12,7 +13,7 @@ class BoardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): ResourceCollection
     {
         $boards = Auth::user()->boards;
 
@@ -22,7 +23,7 @@ class BoardController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): BoardResource
     {
         $validated = $request->validated();
 

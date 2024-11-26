@@ -116,17 +116,13 @@ const handleRegister = async () => {
 
     return navigateTo("/dashboard");
   } catch (e) {
-    if (e instanceof FetchError && e.response?.status === 422) {
-      errors.value = e.response._data.errors;
+    const fetchError = e as FetchError;
+
+    if (fetchError && fetchError.response?.status === 422) {
+      errors.value = fetchError.response._data.errors;
     }
 
-    // useToast().add({
-    //   title: "Error",
-    //   description: e.message || "Something went wrong",
-    //   timeout: 2000,
-    // });
-
-    console.error(e);
+    console.error(fetchError);
   } finally {
     isLoading.value = false;
   }

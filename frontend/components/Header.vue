@@ -1,40 +1,16 @@
 <template>
-  <header class="container mx-auto max-w-7xl">
-    <nav class="flex justify-between items-center p-6">
-      <div>
-        <NuxtLink to="/">Home</NuxtLink>
+  <header class="p-2 border-b dark:border-gray-700 bg-white dark:bg-gray-800">
+    <UContainer>
+      <div class="flex justify-between items-center">
+        <NuxtLink to="/"><Logo /></NuxtLink>
+        <div class="inline-flex justify-end gap-2 items-center">
+          <slot name="actions" />
+          <ThemeToggle />
+          <Dropdown />
+        </div>
       </div>
-      <div>
-        <ul class="flex items-center gap-4">
-          <template v-if="isLoggedIn">
-            <li v-if="user">Hello user {{ user.name }}</li>
-            <li>
-              <button @click.prevent="handleLogout">Logout</button>
-            </li>
-          </template>
-          <template v-else>
-            <li>
-              <NuxtLink to="/auth/register">Register</NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/auth/login">Login</NuxtLink>
-            </li>
-          </template>
-        </ul>
-      </div>
-    </nav>
+    </UContainer>
   </header>
 </template>
 
-<script setup lang="ts">
-interface User {
-  name: string;
-  email: string;
-}
-
-const { isLoggedIn, user, logout } = useSanctum<User>();
-
-const handleLogout = () => {
-  logout();
-};
-</script>
+<script setup lang="ts"></script>
