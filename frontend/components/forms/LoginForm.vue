@@ -69,11 +69,20 @@ const handleSubmit = async () => {
 
   try {
     await login(formState);
+
+    useToast().add({
+      icon: "i-heroicons-check-circle",
+      title: "Welcome!",
+      description: "You have successfully logged in",
+      timeout: 5000,
+    });
   } catch (e) {
-    if (e instanceof FetchError && e.response?.status === 422) {
-      errors.value = e.response._data.errors;
+    const fetchError = e as FetchError;
+    if (fetchError && fetchError.response?.status === 422) {
+      errors.value = fetchError.response._data.errors;
     }
-    console.error(e);
+
+    console.error(fetchError);
   } finally {
     isLoading.value = false;
   }

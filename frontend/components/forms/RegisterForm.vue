@@ -107,11 +107,25 @@ const handleRegister = async () => {
 
     await refreshUser();
 
+    useToast().add({
+      icon: "i-octicon-check-circle",
+      title: "Account Created!",
+      description: "Your account has been created successfully!",
+      timeout: 5000,
+    });
+
     return navigateTo("/dashboard");
   } catch (e) {
     if (e instanceof FetchError && e.response?.status === 422) {
       errors.value = e.response._data.errors;
     }
+
+    // useToast().add({
+    //   title: "Error",
+    //   description: e.message || "Something went wrong",
+    //   timeout: 2000,
+    // });
+
     console.error(e);
   } finally {
     isLoading.value = false;
