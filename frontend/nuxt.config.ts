@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   devServer: {
     host: "laravel.test",
   },
+  ui: {},
   laravelSanctum: {
     apiUrl: "http://laravel.test",
     authMode: "cookie",
