@@ -7,11 +7,6 @@ export default defineNuxtConfig({
     host: "laravel.test",
   },
   ui: {},
-  runtimeConfig: {
-    public: {
-      apiBase: "",
-    },
-  },
   laravelSanctum: {
     apiUrl: "http://laravel.test",
     authMode: "cookie",

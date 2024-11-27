@@ -25,12 +25,10 @@ class BoardController extends Controller
      */
     public function store(Request $request): BoardResource
     {
-        $validated = $request->validated();
-
         $board = Board::create([
             'owner_id' => Auth::id(),
-            'name' => $validated['name'],
-            'description' => $validated['description'],
+            'name' => $request->name,
+            'description' => $request->description,
         ]);
 
         return new BoardResource($board);

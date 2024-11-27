@@ -7,16 +7,16 @@
       color="gray"
       variant="ghost"
       icon="i-heroicons-x-mark"
-      @click="onClick"
+      @click="hideOverlay"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import { useOverlayState } from "~/composable/useOverlayState";
+const { hideOverlay } = useOverlayState();
+
 defineProps<{
   title: string;
-  onClick: () => void;
 }>();
 </script>
-
-<style></style>

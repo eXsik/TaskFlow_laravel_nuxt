@@ -4,6 +4,7 @@
       <div class="flex justify-between items-center">
         <NuxtLink to="/"><Logo /></NuxtLink>
         <div class="inline-flex justify-end gap-2 items-center">
+          <NuxtLink to="/dashboard">Dashboard</NuxtLink>
           <slot name="actions" />
           <ThemeToggle />
           <Dropdown />

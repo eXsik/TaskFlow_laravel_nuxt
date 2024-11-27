@@ -1,24 +1,16 @@
 <template>
-  <USlideover :modelValue="modelValue" @update:modelValue="updateModelValue">
-    Hello
+  <USlideover :modelValue="isVisibleOverlay" @update:modelValue="hideOverlay">
+    <OverlayHeader title="Create a board" />
+    <FormsBoardForm type="create" @createBoard="onBoardCreated" />
   </USlideover>
 </template>
 
 <script setup lang="ts">
-// Oczekujemy propsa 'modelValue' przekazanego z rodzica
-const props = defineProps<{
-  modelValue: boolean; // Przekazujemy modelValue
-}>();
+import { useOverlayState } from "~/composable/useOverlayState";
 
-// Emitujemy zdarzenie 'update:modelValue', aby zaktualizować wartość w rodzicu
-const emit = defineEmits<{
-  (event: "update:modelValue", value: boolean): void;
-}>();
+const { isVisibleOverlay, hideOverlay } = useOverlayState();
 
-// Funkcja do obsługi zmiany wartości
-const updateModelValue = (value: boolean) => {
-  emit("update:modelValue", value);
-};
+defineProps<{
+  onBoardCreated?: () => void;
+}>();
 </script>
-
-<style></style>

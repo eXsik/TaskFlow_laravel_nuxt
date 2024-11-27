@@ -4,7 +4,7 @@
       <UButton
         size="xs"
         icon="i-heroicons-outline:plus-sm"
-        @click="handleShowBoard(true)"
+        @click="showOverlay()"
       >
         Create board
       </UButton>
@@ -16,10 +16,6 @@
     <main class="my-2">
       <UContainer>
         <slot />
-        <Overlay
-          :modelValue="showCreateBoard"
-          @update:modelValue="handleShowBoard"
-        />
       </UContainer>
     </main>
   </section>
@@ -27,9 +23,7 @@
 </template>
 
 <script setup lang="ts">
-const showCreateBoard = ref<boolean>(false);
+import { useOverlayState } from "~/composable/useOverlayState";
 
-const handleShowBoard = (value: boolean) => {
-  showCreateBoard.value = value;
-};
+const { showOverlay } = useOverlayState();
 </script>

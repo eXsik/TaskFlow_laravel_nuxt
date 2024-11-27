@@ -99,6 +99,8 @@ const formState = reactive({
 
 const handleRegister = async () => {
   isLoading.value = true;
+  errors.value = {};
+
   try {
     await useSanctumFetch("/api/register", {
       method: "POST",

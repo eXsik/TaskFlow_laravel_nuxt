@@ -10,10 +10,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function (): void {
-    Route::get('/boards', [BoardController::class, 'index']);
-});
-
-
-Route::get('/test-board2', function (Request $request) {
-    return User::all();
+    Route::apiResource('boards', BoardController::class);
 });

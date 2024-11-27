@@ -66,6 +66,7 @@ const errors = ref<ValidationError>({});
 
 const handleSubmit = async () => {
   isLoading.value = true;
+  errors.value = {};
 
   try {
     await login(formState);
