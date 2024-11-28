@@ -60,7 +60,7 @@ class BoardController extends Controller
      */
     public function update(StoreBoardRequest $request, Board $board): BoardResource
     {
-        // Gate::authorize('update', $board);
+        Gate::authorize('modify', $board);
 
         $validated = $request->validated();
 

@@ -9,11 +9,11 @@ use Illuminate\Auth\Access\Response;
 class BoardPolicy
 {
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user can modify the model.
      */
-    public function update(User $user, Board $board): bool
+    public function modify(User $user, Board $board): bool
     {
-        return $user->id === $board->user_id;
+        return $user->id === $board->owner_id;
     }
 
     /**
@@ -21,7 +21,7 @@ class BoardPolicy
      */
     public function delete(User $user, Board $board): bool
     {
-        return $user->id === $board->user_id;
+        return $user->id === $board->owner_id;
     }
 
 }
