@@ -110,7 +110,7 @@ const handleRegister = async () => {
     await refreshUser();
 
     useToast().add({
-      icon: "i-octicon-check-circle",
+      icon: "i-heroicons-check-circle",
       title: "Account Created!",
       description: "Your account has been created successfully!",
       timeout: 5000,

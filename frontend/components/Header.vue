@@ -1,5 +1,5 @@
 <template>
-  <header class="p-2 border-b dark:border-gray-700 bg-white dark:bg-gray-800">
+  <header class="py-2 border-b dark:border-gray-700 bg-white dark:bg-gray-800">
     <UContainer>
       <div class="flex justify-between items-center">
         <NuxtLink to="/"><Logo /></NuxtLink>
@@ -7,11 +7,13 @@
           <NuxtLink to="/dashboard">Dashboard</NuxtLink>
           <slot name="actions" />
           <ThemeToggle />
-          <Dropdown />
+          <Dropdown v-if="user" />
         </div>
       </div>
     </UContainer>
   </header>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { user } = useSanctum();
+</script>

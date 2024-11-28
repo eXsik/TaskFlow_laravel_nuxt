@@ -1,32 +1,32 @@
 <template>
   <UForm
-    :state="formState"
+    :state="form"
     :schema="BoardSchema"
     class="space-y-4 px-4 py-2"
-    @submit.prevent="handleBoardForm"
+    @submit.prevent="submit"
   >
     <UFormGroup name="name" label="Name">
-      <UInput v-model="formState.name" />
+      <UInput v-model="form.name" />
     </UFormGroup>
     <UFormGroup name="description" label="Description">
-      <UInput v-model="formState.description" />
+      <UInput v-model="form.description" />
     </UFormGroup>
 
-    <UButton type="submit" block :loading="isLoading">
-      <template v-if="type === 'create'"> Create </template>
-      <template v-else> Update </template>
+    <UButton type="submit" block :loading="form.processing">
+      {{ type === "update" ? "Update" : "Create" }}
     </UButton>
   </UForm>
 </template>
 
 <script setup lang="ts">
+import { useBoardState } from "~/composable/useBoardState";
 import { useOverlayState } from "~/composable/useOverlayState";
 import BoardSchema from "~/schemas/Board.schema";
 import type { Board } from "~/types";
 
 interface BoardFormProps {
   type: "create" | "update";
-  initialData?: Board;
+  initialData: Board | null;
   onCreate?: () => void;
   onUpdate?: () => void;
 }
@@ -35,46 +35,43 @@ const emit = defineEmits<{
   (e: "createBoard"): void;
 }>();
 
-const props = withDefaults(defineProps<BoardFormProps>(), {
-  type: "create",
-});
+const props = defineProps<BoardFormProps>();
 const { hideOverlay } = useOverlayState();
-const isLoading = ref(false);
+const { clearSelectedBoard } = useBoardState();
 
-const formState = reactive<Partial<Board>>({
-  name: "",
-  image: "",
-  description: "",
-});
-
-watchEffect(() => {
-  if (props.type === "update" && props.initialData) {
-    formState.name = props.initialData.name || "";
-    formState.description = props.initialData.description || "";
-    formState.image = props.initialData.image || "";
+const form = useSanctumForm(
+  props.type === "update" ? "put" : "post",
+  props.type === "update"
+    ? `/api/boards/${props.initialData?.id}`
+    : `/api/boards`,
+  {
+    name: props.initialData?.name || "",
+    description: props.initialData?.description || "",
+    image: props.initialData?.image || "",
   }
-});
+);
 
-const handleBoardForm = async () => {
-  isLoading.value = true;
+const submit = () => {
+  form
+    .submit()
+    .then((response) => {
+      emit("createBoard");
+      form.reset();
 
-  try {
-    useSanctumForm("post", `/api/boards`, {
-      formState,
+      useToast().add({
+        icon: "i-heroicons-check-circle",
+        title: `Board ${props.type === "update" ? "updated" : "created"}!`,
+        description: `Your board has been ${
+          props.type === "update" ? "updated" : "created"
+        } successfully!`,
+        timeout: 3000,
+      });
+
+      hideOverlay();
+      clearSelectedBoard();
+    })
+    .catch((error) => {
+      console.log("error", error);
     });
-
-    emit("createBoard");
-    useToast().add({
-      icon: "i-octicon-check-circle",
-      title: "Board Created!",
-      description: "Your board has been created successfully!",
-      timeout: 3000,
-    });
-    hideOverlay();
-  } catch (error) {
-    console.log("error", error);
-  } finally {
-    isLoading.value = false;
-  }
 };
 </script>

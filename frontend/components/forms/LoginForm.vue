@@ -75,7 +75,7 @@ const handleSubmit = async () => {
       icon: "i-heroicons-check-circle",
       title: "Welcome!",
       description: "You have successfully logged in",
-      timeout: 5000,
+      timeout: 3000,
     });
   } catch (e) {
     const fetchError = e as FetchError;

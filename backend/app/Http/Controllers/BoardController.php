@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBoardRequest;
 use App\Http\Resources\BoardResource;
 use App\Models\Board;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class BoardController extends Controller
 {
@@ -23,12 +24,14 @@ class BoardController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): BoardResource
+    public function store(StoreBoardRequest $request): BoardResource
     {
+        $validated = $request->validated();
+
         $board = Board::create([
             'owner_id' => Auth::id(),
-            'name' => $request->name,
-            'description' => $request->description,
+            'name' => $validated['name'],
+            'description' => $validated['description'],
         ]);
 
         return new BoardResource($board);
@@ -51,11 +54,22 @@ class BoardController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the given board..
+     * 
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Board $board)
+    public function update(StoreBoardRequest $request, Board $board): BoardResource
     {
-        //
+        // Gate::authorize('update', $board);
+
+        $validated = $request->validated();
+
+        $board->update([
+            'name' => $validated['name'],
+            'description' => $validated['description']
+        ]);
+
+        return new BoardResource($board);
     }
 
     /**

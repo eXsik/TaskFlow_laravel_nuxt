@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Board extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'owner_id'];
+    protected $fillable = ['name', 'owner_id', 'description', 'image'];
 
     public function owner(): BelongsTo
     {

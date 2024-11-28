@@ -1,11 +1,12 @@
 <template>
-  <div>dashboard</div>
-  <div>{{ data }}</div>
+  <BoardList :boards="data" />
   <Overlay :onBoardCreated="refresh" />
 </template>
 
 <script setup lang="ts">
-const { data, refresh } = await useAsyncData("boards", () =>
+import type { Board } from "~/types";
+
+const { data, refresh } = await useAsyncData<Board[]>("boards", () =>
   useSanctumFetch(`/api/boards`)
 );
 
