@@ -2,7 +2,12 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  modules: ["@nuxt/ui", "@qirolab/nuxt-sanctum-authentication"],
+  modules: ["@nuxt/ui", "@qirolab/nuxt-sanctum-authentication", "@nuxt/image"],
+  runtimeConfig: {
+    public: {
+      pixabayApiKey: process.env.PIXABAY_API_KEY,
+    },
+  },
   devServer: {
     host: "laravel.test",
   },

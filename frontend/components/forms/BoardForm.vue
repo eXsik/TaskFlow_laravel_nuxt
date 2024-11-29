@@ -8,6 +8,11 @@
     <UFormGroup name="name" label="Name">
       <UInput v-model="form.name" />
     </UFormGroup>
+
+    <UFormGroup name="image" label="Cover image">
+      <ImagePicker v-model="form.image" />
+    </UFormGroup>
+
     <UFormGroup name="description" label="Description">
       <UInput v-model="form.description" />
     </UFormGroup>

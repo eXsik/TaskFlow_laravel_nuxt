@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/image": "^1.8.1",
     "@nuxt/ui": "^2.19.2",
     "@qirolab/nuxt-sanctum-authentication": "^0.1.15",
     "nuxt": "^3.14.1592",

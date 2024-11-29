@@ -5,12 +5,6 @@
       <div
         class="left place-self-center w-full px-8 md:px-16 lg:px-24 xl:px-36 2xl:px-52"
       >
-        <div class="header text-center mb-6">
-          <div class="flex justify-center mb-4">
-            <Logo />
-          </div>
-        </div>
-
         <slot />
       </div>
       <div class="right hidden lg:block"></div>

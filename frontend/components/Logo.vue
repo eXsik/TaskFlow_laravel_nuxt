@@ -3,7 +3,7 @@
   <div class="flex items-center gap-1">
     <div>
       <svg
-        class="text-primary-400 w-12 h-12"
+        class="text-primary-400 size-7"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -20,8 +20,6 @@
         </g>
       </svg>
     </div>
-    <div class="text-2xl font-bold">TaskFlow</div>
+    <div class="text-xl font-bold">TaskFlow</div>
   </div>
 </template>
-
-<style></style>
