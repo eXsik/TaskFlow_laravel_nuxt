@@ -90,10 +90,10 @@ class BoardControllerTest extends TestCase
             ->shouldReceive('updateBoard')
             ->with($this->isInstanceOf(StoreBoardRequest::class), $this->isInstanceOf(Board::class))
             ->andReturnUsing(function ($request, $board) use ($updatedBoardData) {
-                // 
                 $board->name = $updatedBoardData['name'];
                 $board->description = $updatedBoardData['description'];
                 $board->save();
+
                 return $board;
             });
 
@@ -105,4 +105,21 @@ class BoardControllerTest extends TestCase
         $response->assertJsonFragment($updatedBoardData);
     }
 
+    /**
+     * Testing if user can delete a board.
+     */
+    public function test_can_delete_board(): void
+    {
+        $board = Board::factory()->create(['owner_id' => $this->user->id]);
+
+        $this->boardServiceMock
+            ->shouldReceive('deleteBoard')
+            ->with($this->isInstanceOf(Board::class));
+
+        $this->actingAs($this->user);
+
+        $response = $this->deleteJson(route('boards.destroy', $board), );
+
+        $response->assertStatus(204);
+    }
 }
