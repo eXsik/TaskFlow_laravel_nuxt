@@ -21,8 +21,8 @@ class BoardResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'owner' => new UserResource($this->whenLoaded('owner')),
-            'created_at' => $this->created_at->toDateTimeString(),
-            'updated_at' => $this->updated_at->toDateTimeString(),
+            'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
+            'updated_at' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
         ];
     }
 }

@@ -5,18 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBoardRequest;
 use App\Http\Resources\BoardResource;
 use App\Models\Board;
+use App\Services\BoardService;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class BoardController extends Controller
 {
+    protected $boardService;
+
+    public function __construct(BoardService $boardService)
+    {
+        $this->boardService = $boardService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(): ResourceCollection
     {
-        $boards = Auth::user()->boards;
+        $boards = $this->boardService->getUserBoards();
 
         return BoardResource::collection($boards);
     }
@@ -26,50 +32,21 @@ class BoardController extends Controller
      */
     public function store(StoreBoardRequest $request): BoardResource
     {
-        $validated = $request->validated();
-
-        $board = Board::create([
-            'owner_id' => Auth::id(),
-            'name' => $validated['name'],
-            'description' => $validated['description'],
-        ]);
+        $board = $this->boardService->createBoard($request);
 
         return new BoardResource($board);
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Board $board)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Board $board)
-    {
-        //
-    }
-
-    /**
-     * Update the given board..
+     * Update the given board.
      * 
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(StoreBoardRequest $request, Board $board): BoardResource
     {
-        Gate::authorize('modify', $board);
+        $updatedBoard = $this->boardService->updateBoard($request, $board);
 
-        $validated = $request->validated();
-
-        $board->update([
-            'name' => $validated['name'],
-            'description' => $validated['description']
-        ]);
-
-        return new BoardResource($board);
+        return new BoardResource($updatedBoard);
     }
 
     /**
@@ -77,6 +54,8 @@ class BoardController extends Controller
      */
     public function destroy(Board $board)
     {
-        //
+        $this->boardService->deleteBoard($board);
+
+        return response()->json(["message" => "Board deleted successfully!"], 204);
     }
 }
