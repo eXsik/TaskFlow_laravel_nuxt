@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\BoardController;
-use App\Models\User;
+use App\Http\Controllers\CollectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,5 +11,5 @@ Route::get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::apiResource('boards', BoardController::class);
-    Route::apiResource('collections', BoardController::class);
+    Route::apiResource('collections', CollectionController::class);
 });

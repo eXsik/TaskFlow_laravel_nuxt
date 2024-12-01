@@ -10,7 +10,6 @@ use Illuminate\Http\JsonResponse;
 
 class CollectionController extends Controller
 {
-
     protected $collectionService;
 
     public function __construct(CollectionService $collectionService)

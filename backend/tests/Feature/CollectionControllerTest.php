@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Requests\StoreCollectionRequest;
 use App\Models\Board;
 use App\Models\Collection;
 use App\Models\User;
@@ -36,12 +37,12 @@ class CollectionControllerTest extends TestCase
 
         $data = [
             'name' => 'New Collection',
-            'board_id' => $board->id
+            'board_id' => $board->id,
+            'owner_id' => $this->user->id
         ];
 
         $this->collectionServiceMock->shouldReceive('createCollection')
-            ->once()
-            ->with(Mockery::type('array'))
+            ->with($this->isInstanceOf(StoreCollectionRequest::class))
             ->andReturn(new Collection([
                 'name' => $data['name'],
                 'board_id' => $data['board_id'],
@@ -53,6 +54,8 @@ class CollectionControllerTest extends TestCase
         $response->assertStatus(201)->assertJson([
             'name' => 'New Collection',
             'board_id' => $board->id,
+            'owner_id' => $this->user->id
         ]);
+
     }
 }
