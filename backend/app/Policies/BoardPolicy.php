@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Board;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class BoardPolicy
 {
@@ -15,13 +14,4 @@ class BoardPolicy
     {
         return $user->id === $board->owner_id;
     }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Board $board): bool
-    {
-        return $user->id === $board->owner_id;
-    }
-
 }

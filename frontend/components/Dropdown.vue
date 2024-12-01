@@ -42,5 +42,6 @@ const dropdownItems = ref([
 
 async function handleSignOut() {
   await logout();
+  navigateTo("/");
 }
 </script>

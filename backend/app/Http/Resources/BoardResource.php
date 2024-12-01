@@ -19,6 +19,7 @@ class BoardResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'image' => $this->image,
             'description' => $this->description,
             'owner' => new UserResource($this->whenLoaded('owner')),
             'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,

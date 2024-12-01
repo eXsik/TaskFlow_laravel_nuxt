@@ -10,12 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('boards', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name')->default('Untitled Board');
-            $table->text('description')->nullable();
-            $table->foreignId('owner_id')->constrained('users')->onDelete('cascade');
-            $table->string('image')->nullable();
+        Schema::create('collections', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->uuid('board_id')->foreignId('board_id')->constrained('boards')->cascadeOnDelete();
+            $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('boards');
+        Schema::dropIfExists('collections');
     }
 };

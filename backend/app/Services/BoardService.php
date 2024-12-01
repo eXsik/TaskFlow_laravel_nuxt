@@ -13,14 +13,15 @@ class BoardService
     return Auth::user()->boards;
   }
 
-  public function createBoard(StoreBoardRequest $request)
+  public function createBoard(StoreBoardRequest $request): Board
   {
     $validated = $request->validated();
 
     return Board::create([
       'owner_id' => Auth::id(),
       'name' => $validated['name'],
-      'description' => $validated['description'],
+      'image' => $validated['image'] ?? null,
+      'description' => $validated['description'] ?? null,
     ]);
   }
 

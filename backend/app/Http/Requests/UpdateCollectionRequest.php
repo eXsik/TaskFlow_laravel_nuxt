@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBoardRequest extends FormRequest
+class UpdateCollectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class StoreBoardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "string|max:255",
-            "description" => "string",
-            'image' => 'string'
+            'name' => 'required|string|max:255',
+            'board_id' => 'required|exists:boards,id',
         ];
     }
 }

@@ -1,6 +1,6 @@
 <template>
   <Header>
-    <template #actions>
+    <template v-if="route.name === 'dashboard'" #actions>
       <UButton
         size="xs"
         icon="i-heroicons-outline:plus-sm"
@@ -11,9 +11,9 @@
     </template>
   </Header>
   <section
-    class="h-[calc(100vh_-_80px)] flex items-center justify-center w-full"
+    class="h-[calc(100vh_-_80px)] flex items-center justify-center max-w-7xl w-full mx-auto"
   >
-    <main class="mt-10 h-full">
+    <main class="mt-10 h-full w-full">
       <UContainer>
         <slot />
       </UContainer>
@@ -28,6 +28,8 @@ import { useOverlayState } from "~/composable/useOverlayState";
 
 const { clearSelectedBoard } = useBoardState();
 const { showOverlay } = useOverlayState();
+
+const route = useRoute();
 
 const handleCreateBoard = () => {
   clearSelectedBoard();

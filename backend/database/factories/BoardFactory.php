@@ -20,6 +20,7 @@ class BoardFactory extends Factory
         return [
             'owner_id' => User::factory(),
             'name' => $this->faker->word(),
+            'image' => $this->faker->imageUrl(),
             'description' => $this->faker->sentence(),
         ];
     }

@@ -7,10 +7,10 @@
       v-for="image in data.hits"
       class="h-12 relative rounded overflow-hidden cursor-pointer outline outline-transparent focus:outline-primary-500 hover:outline-primary-500"
       :class="{
-        'ring-2 ring-primary-500 shadow': modelValue === image.largeImageUrl,
+        'ring-2 ring-primary-500 shadow': modelValue === image.largeImageURL,
       }"
       :key="image.id"
-      @click="$emit('update:modelValue', image.largeImageUrl)"
+      @click="$emit('update:modelValue', image.largeImageURL)"
     >
       <NuxtImg
         :src="image.previewURL"
