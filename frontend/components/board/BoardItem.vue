@@ -2,25 +2,27 @@
   <div
     class="shadow-lg dark:bg-gray-800 rounded overflow-hidden relative w-full h-full"
   >
-    <div v-if="board.image" class="h-36 w-full relative z-[1]">
-      <NuxtImg
-        :src="board.image"
-        :alt="board.name"
-        class="w-full h-full object-cover absolute z-[1]"
-      />
+    <div class="h-36 w-full relative z-[1]">
+      <NuxtLink
+        :to="{
+          name: 'boards-id',
+          params: { id: board.id },
+        }"
+      >
+        <NuxtImg
+          :src="board.image"
+          :alt="board.name"
+          class="w-full h-full object-cover absolute z-[1]"
+        />
+      </NuxtLink>
     </div>
 
     <div class="flex flex-col p-2">
       <div class="flex justify-between items-center">
-        <NuxtLink
-          :to="{
-            name: 'boardId',
-            params: { boardId: board.id },
-          }"
-          class="font-semibold text-sm h-full"
-        >
+        <h3 class="font-semibold text-sm h-full">
           {{ board.name }}
-        </NuxtLink>
+        </h3>
+
         <UDropdown :items="actions">
           <UIcon
             name="i-heroicons-outline:dots-vertical"
@@ -44,10 +46,7 @@ import type { Board } from "~/types";
 
 const props = defineProps<{
   board: Board;
-  // onEdit: (board: Board) => void;
 }>();
-
-const refreshBoards = inject("refresh-boards") as () => void;
 
 const actions = ref([
   [
@@ -71,7 +70,6 @@ const { selectBoard } = useBoardState();
 
 function handleSelectBoard(board: Board) {
   selectBoard(board);
-  console.log("board", board);
   showOverlay();
 }
 </script>

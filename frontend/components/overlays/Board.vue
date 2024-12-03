@@ -1,10 +1,12 @@
 <template>
   <USlideover :modelValue="isVisibleOverlay" @update:modelValue="hideOverlay">
-    <OverlayHeader :title="selectedBoard ? 'Update Board' : 'Create a board'" />
+    <OverlaysHeader
+      :title="selectedBoard ? 'Update Board' : 'Create a board'"
+    />
     <FormsBoardForm
       :type="selectedBoard ? 'update' : 'create'"
       :initial-data="selectedBoard"
-      @createBoard="onBoardCreated"
+      @createBoard="refreshBoards"
     />
   </USlideover>
 </template>
@@ -16,7 +18,5 @@ import { useOverlayState } from "~/composable/useOverlayState";
 const { isVisibleOverlay, hideOverlay } = useOverlayState();
 const { selectedBoard } = useBoardState();
 
-defineProps<{
-  onBoardCreated?: () => void;
-}>();
+const refreshBoards = inject("refresh-boards") as () => void;
 </script>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCollectionRequest extends FormRequest
+class StoreCardRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,6 @@ class StoreCollectionRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'board_id' => 'required|exists:boards,id',
-            'owner_id' => 'required|exists:users,id'
         ];
     }
 }

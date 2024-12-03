@@ -25,6 +25,16 @@ class BoardService
     ]);
   }
 
+  public function showBoard($boardId)
+  {
+    $board = Board::find($boardId)
+      ->where('owner_id', Auth::id())
+      ->with('cards')
+      ->firstOrFail();
+
+    return $board;
+  }
+
   public function updateBoard(StoreBoardRequest $request, Board $board): Board
   {
     Gate::authorize('modify', $board);

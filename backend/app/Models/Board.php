@@ -21,8 +21,8 @@ class Board extends Model
         return $this->belongsTo(User::class, 'owner_id');
     }
 
-    public function collections(): HasMany
+    public function cards(): HasMany
     {
-        return $this->hasMany(Collection::class);
+        return $this->hasMany(Card::class);
     }
 }

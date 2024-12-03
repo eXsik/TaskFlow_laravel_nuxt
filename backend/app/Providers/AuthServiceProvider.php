@@ -3,10 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Board;
-use App\Models\Collection;
+use App\Models\Card;
 use App\Policies\BoardPolicy;
-use App\Policies\CollectionPolicy;
-use Illuminate\Support\Facades\Gate;
+use App\Policies\CardPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -18,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Board::class => BoardPolicy::class,
-        Collection::class => CollectionPolicy::class,
+        Card::class => CardPolicy::class,
     ];
 
     public function boot()

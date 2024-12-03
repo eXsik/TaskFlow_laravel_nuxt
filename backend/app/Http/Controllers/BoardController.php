@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\BoardNotFoundException;
 use App\Http\Requests\StoreBoardRequest;
 use App\Http\Resources\BoardResource;
 use App\Models\Board;
 use App\Services\BoardService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class BoardController extends Controller
@@ -33,6 +35,17 @@ class BoardController extends Controller
     public function store(StoreBoardRequest $request): BoardResource
     {
         $board = $this->boardService->createBoard($request);
+
+        return new BoardResource($board);
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Board $board)
+    {
+        $board = $this->boardService->showBoard($board->id);
 
         return new BoardResource($board);
     }

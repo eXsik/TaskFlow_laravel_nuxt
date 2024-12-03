@@ -10,11 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('collections', function (Blueprint $table) {
+        Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->uuid('board_id')->foreignId('board_id')->constrained('boards')->cascadeOnDelete();
-            $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
+            $table->string('title');
+            $table->foreignId('card_id')->constrained('cards')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('collections');
+        Schema::dropIfExists('tickets');
     }
 };
