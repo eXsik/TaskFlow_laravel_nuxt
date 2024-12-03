@@ -10,6 +10,7 @@ export interface Board {
   description: string | undefined;
   owner_id: number;
   image: string;
+  cards: Card[];
   created_at: string;
   updated_at: string;
 }

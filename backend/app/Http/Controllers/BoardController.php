@@ -43,11 +43,11 @@ class BoardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Board $board)
+    public function show(Board $board): BoardResource
     {
-        $board = $this->boardService->showBoard($board->id);
+        $showBoard = $this->boardService->showBoard($board->id);
 
-        return new BoardResource($board);
+        return new BoardResource($showBoard);
     }
 
     /**

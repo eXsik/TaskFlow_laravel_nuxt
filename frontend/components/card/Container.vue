@@ -1,0 +1,84 @@
+<template>
+  <div>
+    <draggable
+      :list="cards"
+      handle=".list-handle"
+      item-key="id"
+      :scroll-sensitivity="500"
+      :force-fallback="true"
+      ghost-class="ghost-board"
+      drag-class="dragging-board"
+      class="flex gap-4 h-[80vh] overflow-x-auto pb-4"
+      @sort="handleSort"
+    >
+      <template #item="{ element }">
+        <div class="flex">
+          <div
+            class="w-72 shadow bg-white dark:bg-gray-800 rounded flex flex-col"
+          >
+            <div
+              class="px-4 py-2 border-b border-b-primary flex items-center justify-between list-handle cursor-move"
+            >
+              <h3 class="font-medium">
+                {{ element.name }}
+              </h3>
+
+              <UDropdown :items="cardActions">
+                <UIcon name="i-heroicons-cog-6-tooth" class="text-primary" />
+              </UDropdown>
+            </div>
+
+            <div class="list-body px-4 py-2 flex-1 overflow-y-hidden">
+              {{ element }}
+            </div>
+
+            <div class="p-1 border-t dark:border-gray-700 flex items-center">
+              <UButton block> Add ticket</UButton>
+            </div>
+          </div>
+        </div>
+      </template>
+    </draggable>
+  </div>
+</template>
+
+<script setup lang="ts">
+import draggable from "vuedraggable";
+import { cardActionsItems } from "~/constants";
+import type { Board, Card } from "~/types";
+
+interface Props {
+  cards: Card[];
+  boardId: string;
+}
+
+const props = defineProps<Props>();
+
+const cardActions = ref(cardActionsItems);
+
+async function handleSort(event: CustomEvent) {
+  console.log("event", event);
+  handleSortForm.submit();
+}
+
+const handleSortForm = useSanctumForm("put", `/api/boards/${props.boardId}`, {
+  cards: props.cards.flatMap((item) => item.id),
+});
+</script>
+
+<style>
+.ghost-board > div {
+  @apply opacity-50;
+}
+
+.ghost-board > div > div {
+  @apply invisible;
+}
+
+.dragging-board {
+  @apply shadow-2xl transform rotate-2 !cursor-grab;
+}
+.sortable-chosen {
+  opacity: 1 !important;
+}
+</style>

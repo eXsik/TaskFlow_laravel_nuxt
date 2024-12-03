@@ -2,21 +2,21 @@
 
 namespace Tests\Feature;
 
-use App\Http\Requests\StoreCollectionRequest;
+use App\Http\Requests\StoreCardRequest;
 use App\Models\Board;
-use App\Models\Collection;
+use App\Models\Card;
 use App\Models\User;
-use App\Services\CollectionService;
+use App\Services\CardService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
 
-class CollectionControllerTest extends TestCase
+class CardControllerTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $user;
-    protected $collectionServiceMock;
+    protected $cardServiceMock;
 
     protected function setUp(): void
     {
@@ -24,35 +24,35 @@ class CollectionControllerTest extends TestCase
 
         $this->user = User::factory()->create();
 
-        $this->collectionServiceMock = $this->mock(CollectionService::class);
-        $this->app->instance(CollectionService::class, $this->collectionServiceMock);
+        $this->cardServiceMock = $this->mock(CardService::class);
+        $this->app->instance(CardService::class, $this->cardServiceMock);
     }
 
     /**
-     * Testing if user can create a collection.
+     * Testing if user can create a card.
      */
-    public function test_can_create_collection(): void
+    public function test_can_create_card(): void
     {
         $board = Board::factory()->create();
 
         $data = [
-            'name' => 'New Collection',
+            'name' => 'New Card',
             'board_id' => $board->id,
             'owner_id' => $this->user->id
         ];
 
-        $this->collectionServiceMock->shouldReceive('createCollection')
-            ->with($this->isInstanceOf(StoreCollectionRequest::class))
-            ->andReturn(new Collection([
+        $this->cardServiceMock->shouldReceive('createCard')
+            ->with($this->isInstanceOf(StoreCardRequest::class))
+            ->andReturn(new Card([
                 'name' => $data['name'],
                 'board_id' => $data['board_id'],
                 'owner_id' => $this->user->id,
             ]));
 
-        $response = $this->actingAs($this->user)->postJson(route('collections.store'), $data);
+        $response = $this->actingAs($this->user)->postJson(route('cards.store'), $data);
 
         $response->assertStatus(201)->assertJson([
-            'name' => 'New Collection',
+            'name' => 'New Card',
             'board_id' => $board->id,
             'owner_id' => $this->user->id
         ]);

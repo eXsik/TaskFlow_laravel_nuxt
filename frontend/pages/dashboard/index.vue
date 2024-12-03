@@ -9,7 +9,7 @@
         Create board
       </UButton>
     </template>
-    <BoardList :boards="data" />
+    <BoardList :boards="data ?? []" />
     <OverlaysBoard />
   </WrapperDefault>
 </template>

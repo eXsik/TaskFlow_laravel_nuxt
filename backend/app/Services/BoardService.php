@@ -25,9 +25,9 @@ class BoardService
     ]);
   }
 
-  public function showBoard($boardId)
+  public function showBoard(string $boardId)
   {
-    $board = Board::find($boardId)
+    $board = Board::where('id', $boardId)
       ->where('owner_id', Auth::id())
       ->with('cards')
       ->firstOrFail();

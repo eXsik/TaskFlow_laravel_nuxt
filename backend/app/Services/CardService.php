@@ -25,7 +25,7 @@ class CardService
       ->first();
 
     if ($board) {
-      $board->cards()->attach($card->id);
+      $board->cards()->save($card);
 
       return $card;
     }

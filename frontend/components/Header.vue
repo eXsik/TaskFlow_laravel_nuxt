@@ -3,8 +3,10 @@
     <UContainer>
       <div class="flex justify-between items-center">
         <NuxtLink to="/"><Logo /></NuxtLink>
-        <div class="inline-flex justify-end gap-2 items-center">
-          <NuxtLink to="/dashboard">Dashboard</NuxtLink>
+        <div class="inline-flex justify-end gap-3 items-center">
+          <NuxtLink to="/dashboard" class="text-sm font-semibold"
+            >Dashboard</NuxtLink
+          >
           <slot name="actions" />
           <ThemeToggle />
           <Dropdown v-if="user" />
