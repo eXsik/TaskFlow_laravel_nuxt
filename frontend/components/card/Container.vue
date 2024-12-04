@@ -28,7 +28,7 @@
               </UDropdown>
             </div>
 
-            <div class="list-body px-4 py-2 flex-1 overflow-y-hidden">
+            <div class="list-body px-4 py-2 flex-1 overflow-y-hfidden">
               {{ element }}
             </div>
 
@@ -57,13 +57,12 @@ const props = defineProps<Props>();
 const cardActions = ref(cardActionsItems);
 
 async function handleSort(event: CustomEvent) {
-  console.log("event", event);
-  handleSortForm.submit();
-}
+  const handleSortForm = useSanctumForm("put", `/api/boards/${props.boardId}`, {
+    cards: props.cards.flatMap((item) => item.id),
+  });
 
-const handleSortForm = useSanctumForm("put", `/api/boards/${props.boardId}`, {
-  cards: props.cards.flatMap((item) => item.id),
-});
+  await handleSortForm.submit();
+}
 </script>
 
 <style>

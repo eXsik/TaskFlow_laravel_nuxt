@@ -4,7 +4,7 @@
 
     <FormsCardForm
       :type="selectedCard ? 'update' : 'create'"
-      :initialData="selectedCard"
+      :initial-data="selectedCard"
       :boardId="(boardId as string)"
       @createCard="refreshCards"
     >
@@ -17,9 +17,8 @@ import { useCardState } from "~/composable/useCardState";
 import { useOverlayState } from "~/composable/useOverlayState";
 const { id: boardId } = useRoute().params;
 
+const { isVisibleOverlay, hideOverlay } = useOverlayState();
 const { selectedCard } = useCardState();
 
-const refreshCards = inject("refresh-cards") as () => void;
-
-const { isVisibleOverlay, hideOverlay } = useOverlayState();
+const refreshCards = inject("refresh-cards") as () => Promise<void>;
 </script>

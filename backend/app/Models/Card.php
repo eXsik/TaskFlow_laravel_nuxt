@@ -15,7 +15,7 @@ class Card extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['name', 'owner_id', 'board_id'];
+    protected $fillable = ['name', 'owner_id', 'board_id', 'order'];
 
     public function tickets(): HasMany
     {

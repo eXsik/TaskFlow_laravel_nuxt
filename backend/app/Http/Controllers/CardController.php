@@ -18,7 +18,7 @@ class CardController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created card in storage.
      */
     public function store(StoreCardRequest $request): JsonResponse
     {
@@ -34,7 +34,7 @@ class CardController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the card in storage.
      */
     public function update(UpdateCardRequest $request, Card $card): JsonResponse
     {
@@ -50,7 +50,7 @@ class CardController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the card from storage.
      */
     public function destroy(Card $card): JsonResponse
     {

@@ -3,6 +3,8 @@ namespace App\Services;
 
 use App\Http\Requests\StoreBoardRequest;
 use App\Models\Board;
+use App\Models\Card;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -10,7 +12,10 @@ class BoardService
 {
   public function getUserBoards()
   {
-    return Auth::user()->boards;
+    /** @var \App\Models\User */
+    $currentUser = Auth::user();
+
+    return $currentUser->boards()->with('cards')->get();
   }
 
   public function createBoard(StoreBoardRequest $request): Board
@@ -40,6 +45,17 @@ class BoardService
     Gate::authorize('modify', $board);
 
     $validated = $request->validated();
+
+    $newCardOrder = $validated['cards'];
+
+    // Update order of cards
+    foreach ($newCardOrder as $index => $cardId) {
+      $card = Card::find($cardId);
+
+      if ($card) {
+        $card->update(['order' => $index]);
+      }
+    }
 
     $board->update($validated);
 

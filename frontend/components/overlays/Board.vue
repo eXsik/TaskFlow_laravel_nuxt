@@ -18,5 +18,5 @@ import { useOverlayState } from "~/composable/useOverlayState";
 const { isVisibleOverlay, hideOverlay } = useOverlayState();
 const { selectedBoard } = useBoardState();
 
-const refreshBoards = inject("refresh-boards") as () => void;
+const refreshBoards = inject("refresh-boards") as () => Promise<void>;
 </script>

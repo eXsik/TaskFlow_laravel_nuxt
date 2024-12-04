@@ -10,11 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('tickets', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->uuid('card_id')->foreignId('card_id')->constrained('cards')->cascadeOnDelete();
-            $table->timestamps();
+        Schema::table('cards', function (Blueprint $table) {
+            $table->integer('order')->after(column: 'owner_id')->default(0);
         });
     }
 
@@ -23,6 +20,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('tickets');
+        Schema::table('cards', function (Blueprint $table) {
+            $table->dropColumn('order');
+        });
     }
 };

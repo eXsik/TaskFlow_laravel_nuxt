@@ -19,7 +19,7 @@
 import { useCardState } from "~/composable/useCardState";
 import { useOverlayState } from "~/composable/useOverlayState";
 import CardSchema from "~/schemas/Card.schema";
-import type { Card, User } from "~/types";
+import type { Card } from "~/types";
 
 interface CardFormProps {
   type: "create" | "update";
@@ -48,10 +48,10 @@ const form = useSanctumForm(
   }
 );
 
-const submit = () => {
+const submit = async () => {
   form
     .submit()
-    .then((response) => {
+    .then(async (response) => {
       emit("createCard");
       form.reset();
 

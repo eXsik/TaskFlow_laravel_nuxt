@@ -1,9 +1,9 @@
 <template>
   <WrapperDefault
-    v-if="boardData"
+    v-if="data"
     class="h-screen"
     :style="{
-      backgroundImage: `url(${boardData?.image})`,
+      backgroundImage: `url(${data?.image})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }"
@@ -19,10 +19,10 @@
     </template>
 
     <h1 class="text-3xl font-semibold mb-4 inline-block">
-      {{ boardData.name }}
+      {{ data.name }}
     </h1>
 
-    <CardContainer :cards="boardData?.cards ?? []" :board-id="boardData?.id" />
+    <CardContainer :cards="data.cards" :board-id="data?.id" />
 
     <OverlaysCard />
   </WrapperDefault>
@@ -35,17 +35,15 @@ import type { Board } from "~/types";
 
 const { id: boardId } = useRoute().params;
 
+const { data, refresh, error } = await useAsyncData<Board>("boards", () =>
+  useSanctumFetch(`/api/boards/${boardId}`)
+);
+
+provide("refresh-cards", refresh);
+
 definePageMeta({
   layout: "panel",
 });
-
-const {
-  data: boardData,
-  refresh,
-  error,
-} = await useAsyncData("boards", () =>
-  useSanctumFetch<Board>(`/api/boards/${boardId}`)
-);
 
 if (error.value) {
   throw createError({
@@ -53,8 +51,6 @@ if (error.value) {
     message: "Board not found",
   });
 }
-
-provide("refresh-cards", refresh);
 
 const { showOverlay } = useOverlayState();
 

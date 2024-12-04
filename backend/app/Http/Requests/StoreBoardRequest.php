@@ -24,7 +24,9 @@ class StoreBoardRequest extends FormRequest
         return [
             "name" => "string|max:255",
             "description" => "string",
-            'image' => 'string'
+            'image' => 'string',
+            'cards' => 'nullable|array',
+            'cards.*' => 'exists:cards,id',
         ];
     }
 }
