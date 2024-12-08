@@ -13,6 +13,8 @@ return new class extends Migration {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->text('description')->nullable();
+            $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
             $table->uuid('card_id')->foreignId('card_id')->constrained('cards')->cascadeOnDelete();
             $table->timestamps();
         });

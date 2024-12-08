@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCardRequest;
 use App\Http\Requests\UpdateCardRequest;
+use App\Http\Resources\TicketResource;
 use App\Models\Card;
 use App\Services\CardService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class CardController extends Controller
 {

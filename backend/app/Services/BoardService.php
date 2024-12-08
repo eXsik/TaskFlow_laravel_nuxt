@@ -46,14 +46,16 @@ class BoardService
 
     $validated = $request->validated();
 
-    $newCardOrder = $validated['cards'];
+    if (isset($validated['cards'])) {
+      $newCardOrder = $validated['cards'];
 
-    // Update order of cards
-    foreach ($newCardOrder as $index => $cardId) {
-      $card = Card::find($cardId);
+      // Update order of cards
+      foreach ($newCardOrder as $index => $cardId) {
+        $card = Card::find($cardId);
 
-      if ($card) {
-        $card->update(['order' => $index]);
+        if ($card) {
+          $card->update(['order' => $index]);
+        }
       }
     }
 

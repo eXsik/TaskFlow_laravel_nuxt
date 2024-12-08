@@ -16,19 +16,8 @@
           <div
             class="w-72 shadow bg-white dark:bg-gray-800 rounded flex flex-col"
           >
-            <div
-              class="px-4 py-2 border-b border-b-primary flex items-center justify-between list-handle cursor-move"
-            >
-              <h3 class="font-medium">
-                {{ element.name }}
-              </h3>
-
-              <UDropdown :items="cardActions">
-                <UIcon name="i-heroicons-cog-6-tooth" class="text-primary" />
-              </UDropdown>
-            </div>
-
-            <div class="list-body px-4 py-2 flex-1 overflow-y-hfidden">
+            <CardHeader :title="element.name" />
+            <div class="list-body px-4 py-2 flex-1 overflow-y-hidden">
               {{ element }}
             </div>
 
@@ -44,7 +33,6 @@
 
 <script setup lang="ts">
 import draggable from "vuedraggable";
-import { cardActionsItems } from "~/constants";
 import type { Board, Card } from "~/types";
 
 interface Props {
@@ -53,8 +41,6 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
-const cardActions = ref(cardActionsItems);
 
 async function handleSort(event: CustomEvent) {
   const handleSortForm = useSanctumForm("put", `/api/boards/${props.boardId}`, {
